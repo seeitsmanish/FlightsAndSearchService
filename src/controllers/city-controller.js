@@ -1,6 +1,6 @@
 const CityService = require('../services/city-service');
 // const { CityService } =  require('../servies/index');
-
+const {StatusCodes} = require('http-status-codes');
 const cityService = new CityService();
 /*
 * POST
@@ -14,7 +14,7 @@ const create = async (req, res) => {
             name : req.body.name
         }
         const city = await cityService.create(req.body);
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             data : city,
             success : true,
             message : 'Successfully created a city',
@@ -22,11 +22,11 @@ const create = async (req, res) => {
         });
     }catch(error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             succcess : false,
-            message : "Not able to create a city",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -34,8 +34,8 @@ const create = async (req, res) => {
 // DELETE -> /city/:id
 const destroy = async (req, res) => {
     try{
-        const response = await cityService.delete(req.params.id);
-        return res.status(200).json({
+        const response = await cityService.destroy(req.params.id);
+        return res.status(StatusCodes.OK).json({
             data : response,
             success : true,
             message : 'Successfully deleted a city',
@@ -43,11 +43,11 @@ const destroy = async (req, res) => {
         });
     }catch(error) {
         console.log(error);
-        return res.status(500).json( {
+        return res.status(error.statusCode).json({
             data : {},
-            success : false,
-            message : 'Not able to delete the city',
-            err : error
+            succcess : false,
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -56,7 +56,7 @@ const destroy = async (req, res) => {
 const get = async (req, res) => {
     try{
         const response = await cityService.get(req.params.id);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             success : true,
             message : 'Successfully fetched a city',
@@ -64,12 +64,12 @@ const get = async (req, res) => {
         });
     }catch(error) {
         console.log(error);
-        return res.status(500).json( {
+        return res.status(error.statusCode).json({
             data : {},
-            success : false,
-            message : 'Not able to fetch the city',
-            err : error
-        });    
+            succcess : false,
+            message : error.message,
+            err : error.explanation
+        });   
     }
 }
 
@@ -78,7 +78,7 @@ const get = async (req, res) => {
 const update = async (req, res) => {
     try{
         const response = await cityService.update(req.params.id, req.body);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             success : true,
             message : 'Successfully updated the city',
@@ -86,11 +86,11 @@ const update = async (req, res) => {
         });        
     }catch(error) {
         console.log(error);
-        return res.status(500).json( {
+        return res.status(error.statusCode).json({
             data : {},
-            success : false,
-            message : 'Not able to update the city',
-            err : error
+            succcess : false,
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -98,7 +98,7 @@ const update = async (req, res) => {
 const getAll = async (req,res) => {
     try{
         const cities = await cityService.getAll(req.query);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : cities,
             success : true,
             message : "Successfully fetched the cities",
@@ -106,11 +106,11 @@ const getAll = async (req,res) => {
         });
     }catch(error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
-            success : false,
-            message  : "Not able to fetch the cities",
-            err : error
+            succcess : false,
+            message : error.message,
+            err : error.explanation
         });
     }
 }

@@ -1,6 +1,6 @@
 const { response } = require("express");
 const {FlightService} = require("../services/index");
-
+const {StatusCodes} = require('http-status-codes');
 const flightService =  new FlightService();
 
 const create = async (req,res) => {
@@ -17,7 +17,7 @@ const create = async (req,res) => {
             Company : req.body.Company
         })
         
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             data : result,
             success : true,
             message : "Successfully created Flight",
@@ -25,11 +25,11 @@ const create = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             success : false,
-            message : "Not able to create Flight",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -37,7 +37,7 @@ const create = async (req,res) => {
 const destroy = async (req,res) => {
     try {
         const result = await flightService.destroy(req.params.id);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
             message : "Succesfully deleted flight",
@@ -45,11 +45,11 @@ const destroy = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             success : false,
-            message : "Not able to delete the flight",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -57,7 +57,7 @@ const destroy = async (req,res) => {
 const get = async (req,res) => {
     try {
         const result = await flightService.get(req.params.id);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
             message : "Succesfully fetched the flight",
@@ -65,11 +65,11 @@ const get = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             success : false,
-            message : "Not able to fetch the flight",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -77,7 +77,7 @@ const get = async (req,res) => {
 const getAll = async (req,res) => {
     try {
         const result = await flightService.get(req.query);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
             message : "Succesfully fetched the flights",
@@ -85,11 +85,11 @@ const getAll = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             success : false,
-            message : "Not able to fetch the flights",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -97,7 +97,7 @@ const getAll = async (req,res) => {
 const update  = async (req,res) => {
     try {
         const result = await flightService.update(req.params.id, req.body);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             message: true,
             error : {},
@@ -105,11 +105,11 @@ const update  = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
-            message : "Not able to update the flight",
             success : false,
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }

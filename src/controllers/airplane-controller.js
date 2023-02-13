@@ -1,5 +1,5 @@
 const {AirplaneService} = require('../services/index')
-
+const {StatusCodes} = require('http-status-codes');
 const airplaneService = new AirplaneService();
 
 const create = async (req,res) => {
@@ -10,7 +10,7 @@ const create = async (req,res) => {
             capacity : req.body.capacity
         }
         const result = await airplaneService.create(airplane);
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             data : result,
             success : true,
             message : "Successfully created airplane",
@@ -18,11 +18,11 @@ const create = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             succcess : false,
-            message : "Not able to create the airplane",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -30,7 +30,7 @@ const create = async (req,res) => {
 const destroy = async (req,res) => {
     try {
         const result = await airplaneService.destroy(req.params.id);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
             message : "Successfully deleted the airplane",
@@ -38,11 +38,11 @@ const destroy = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             succcess : false,
-            message : "Not able to delete the airplane",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -50,7 +50,7 @@ const destroy = async (req,res) => {
 const update = async (req,res) => {
     try {
         const result = await airplaneService.update(req.params.id);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
             message : "Successfullt updated the airplane",
@@ -58,11 +58,11 @@ const update = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             succcess : false,
-            message : "Not able to update the airplane",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -70,7 +70,7 @@ const update = async (req,res) => {
 const get = async (req,res) => {
     try {
         const response = await airplaneService.get(req.params.id);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             success : true,
             message : "Successfully fetched the airplane",
@@ -78,11 +78,11 @@ const get = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
-            success : false,
-            message : "Not able to fetch the airplane",
-            err : error
+            succcess : false,
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -90,7 +90,7 @@ const get = async (req,res) => {
 const getAll = async (req,res) => {
     try {
         const response = await airplaneService.getAll();
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             success : true,
             message : "Successfully fetched all the airplane",
@@ -98,11 +98,11 @@ const getAll = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
-            success : false,
-            message : "Not able to fetch the airplane",
-            err : error
+            succcess : false,
+            message : error.message,
+            err : error.explanation
         });
     }
 }

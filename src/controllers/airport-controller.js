@@ -1,11 +1,12 @@
 const {AirportService} = require('../services/index')
+const {StatusCodes} = require('http-status-codes');
 
 const airportService = new AirportService();
 
 const create = async (req,res) => {
     try {
         const result = await airportService.create(req.body);
-        return res.status(201).json({
+        return res.status(StatusCodes.CREATED).json({
             data : result,
             success : true,
             message : "Successfully created airport",
@@ -13,11 +14,11 @@ const create = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             succcess : false,
-            message : "Not able to create the airport",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -25,7 +26,7 @@ const create = async (req,res) => {
 const destroy = async (req,res) => {
     try {
         const result = await airportService.destroy(req.params.id);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
             message : "Successfully deleted the airport",
@@ -33,11 +34,11 @@ const destroy = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             succcess : false,
-            message : "Not able to delete the airport",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -45,7 +46,7 @@ const destroy = async (req,res) => {
 const update = async (req,res) => {
     try {
         const result = await airportService.update(req.params.id);
-        return res.status(201).json({
+        return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
             message : "Successfullt updated the city",
@@ -53,11 +54,11 @@ const update = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
             succcess : false,
-            message : "Not able to update the city",
-            err : error
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -65,7 +66,7 @@ const update = async (req,res) => {
 const get = async (req,res) => {
     try {
         const response = await airportService.get(req.params.id);
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             success : true,
             message : "Successfully fetched the airport",
@@ -73,11 +74,11 @@ const get = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
-            success : false,
-            message : "Not able to fetch the airport",
-            err : error
+            succcess : false,
+            message : error.message,
+            err : error.explanation
         });
     }
 }
@@ -85,7 +86,7 @@ const get = async (req,res) => {
 const getAll = async (req,res) => {
     try {
         const response = await airportService.getAll();
-        return res.status(200).json({
+        return res.status(StatusCodes.OK).json({
             data : response,
             success : true,
             message : "Successfully fetched all the airports",
@@ -93,11 +94,11 @@ const getAll = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data : {},
-            success : false,
-            message : "Not able to fetch the airports",
-            err : error
+            succcess : false,
+            message : error.message,
+            err : error.explanation
         });
     }
 }

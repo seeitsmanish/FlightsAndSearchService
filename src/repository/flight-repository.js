@@ -1,5 +1,6 @@
 const {Flights} = require("../models/index");
 const {Op} = require('sequelize');
+const {ValidationError} = require('../utils/errors/index');
 class FlightRepository{
 
     #createFilter(data) {
@@ -28,8 +29,8 @@ class FlightRepository{
             const result = await Flights.create(data);
             return result;
         } catch (error) {
-            console.log("Something went wrong in repository layer");
-            throw error;
+            console.log("Something went wrong in crud repository");
+            throw new ValidationError(error);
         }
     }
 
@@ -49,11 +50,12 @@ class FlightRepository{
 
     async update(flightId, data) {
         try {
-          const result = await Flights.update(data, {
+          await Flights.update(data, {
             where : {
                 id : flightId
             }
           });
+          const result = await Flights.findByPk(flightId);
           return result;
         } catch (error) {
             console.log("Something went wrong in repository layer");
