@@ -1,4 +1,4 @@
-const {Flights} = require("../models/index");
+const {Flight} = require("../models/index");
 const {Op} = require('sequelize');
 const {ValidationError} = require('../utils/errors/index');
 class FlightRepository{
@@ -26,7 +26,7 @@ class FlightRepository{
 
     async create(data) {
         try {
-            const result = await Flights.create(data);
+            const result = await Flight.create(data);
             return result;
         } catch (error) {
             console.log("Something went wrong in crud repository");
@@ -36,7 +36,7 @@ class FlightRepository{
 
     async destroy(flightId) {
         try {
-            const result = await Flights.destroy({
+            const result = await Flight.destroy({
                 where : {
                     id : flightId
                 }
@@ -50,12 +50,12 @@ class FlightRepository{
 
     async update(flightId, data) {
         try {
-          await Flights.update(data, {
+          await Flight.update(data, {
             where : {
                 id : flightId
             }
           });
-          const result = await Flights.findByPk(flightId);
+          const result = await Flight.findByPk(flightId);
           return result;
         } catch (error) {
             console.log("Something went wrong in repository layer");
@@ -65,7 +65,7 @@ class FlightRepository{
 
     async get(flightId) {
         try {
-            const result = await Flights.findByPk(flightId);
+            const result = await Flight.findByPk(flightId);
             return result;
         } catch (error) {
             console.log("Something went wrong in repository layer");
@@ -76,7 +76,7 @@ class FlightRepository{
     async getAll(filter) {
         try {
             const filterObject = this.#createFilter(filter);
-            const flight = await Flights.findAll({
+            const flight = await Flight.findAll({
                 where : filterObject
             });
             return flight;
