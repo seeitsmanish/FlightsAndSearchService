@@ -49,7 +49,7 @@ const update = async (req,res) => {
         return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
-            message : "Successfullt updated the city",
+            message : "Successfully updated the city",
             error : {}
         });
     } catch (error) {
