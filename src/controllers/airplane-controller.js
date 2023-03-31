@@ -93,7 +93,7 @@ const getAll = async (req,res) => {
         return res.status(StatusCodes.OK).json({
             data : response,
             success : true,
-            message : "Successfully fetched all the airplane",
+            message : "Successfully fetched all of the airplane",
             error : {}
         });
     } catch (error) {
