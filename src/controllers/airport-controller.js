@@ -14,7 +14,7 @@ const create = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(error.statusCode).json({
+        return res.status(error.statusCode || 500).json({
             data : {},
             succcess : false,
             message : error.message,

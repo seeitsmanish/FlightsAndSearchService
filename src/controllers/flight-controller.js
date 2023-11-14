@@ -25,12 +25,34 @@ const create = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(error.statusCode).json({
+        return res.status(error.statusCode || 500).json({
             data : {},
             success : false,
             message : error.message,
             err : error.explanation
         });
+    }
+}
+
+const searchFlights = async (req,res) => {
+
+    try {
+        const flights = await flightService.searchFlights(req.query);
+        return res.status(StatusCodes.OK).json({
+            data: flights,
+            success : true,
+            message: 'successfully fetched flights',
+            err: {}
+        })
+
+    }catch(error) {
+        console.log(error);
+        return res.status(error.statusCode || 500).json({
+            data: {},
+            success: false,
+            message: error.message || 'something went wrong',
+            err: err.explanation || 'internal server error'
+        })
     }
 }
 
@@ -45,7 +67,7 @@ const destroy = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(error.statusCode).json({
+        return res.status(error.statusCode|| 500).json({
             data : {},
             success : false,
             message : error.message,
@@ -65,7 +87,7 @@ const get = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(error.statusCode).json({
+        return res.status(error.statusCode || 500).json({
             data : {},
             success : false,
             message : error.message,
@@ -76,7 +98,7 @@ const get = async (req,res) => {
 
 const getAll = async (req,res) => {
     try {
-        const result = await flightService.get(req.query);
+        const result = await flightService.getAll(req.query);
         return res.status(StatusCodes.OK).json({
             data : result,
             success : true,
@@ -85,7 +107,7 @@ const getAll = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(error.statusCode).json({
+        return res.status(error.statusCode || 500).json({
             data : {},
             success : false,
             message : error.message,
@@ -105,7 +127,7 @@ const update  = async (req,res) => {
         });
     } catch (error) {
         console.log(error);
-        return res.status(error.statusCode).json({
+        return res.status(error.statusCode || 500).json({
             data : {},
             success : false,
             message : error.message,
@@ -120,4 +142,5 @@ module.exports = {
     update,
     get,
     getAll,
+    searchFlights,
 }

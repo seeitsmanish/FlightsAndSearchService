@@ -31,6 +31,29 @@ const create = async (req, res) => {
     }
 }
 
+const searchCities = async (req,res) => {
+
+    try{
+        const query = req.query.name;
+        const cities = await cityService.searchCities(query);
+        return res.status(StatusCodes.OK).json({
+            success : true,
+            data: (cities.length == 0) ? [] : cities,
+            message: "Successfully fetched cities with given query",
+            err : {}
+        });
+    }catch(error) {
+        console.log(error);
+        return res.status(error.statusCode || 500).json({
+            data : {},
+            succcess : false,
+            message : error.message,
+            err : error.explanation
+        });
+    }
+
+}
+
 // DELETE -> /city/:id
 const destroy = async (req, res) => {
     try{
@@ -120,5 +143,6 @@ module.exports = {
     destroy,
     get,
     update,
-    getAll
+    getAll,
+    searchCities
 }

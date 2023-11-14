@@ -49,7 +49,7 @@ const destroy = async (req,res) => {
 
 const update = async (req,res) => {
     try {
-        const result = await airplaneService.update(req.params.id);
+        const result = await airplaneService.update(req.params.id, req.body);
         return res.status(StatusCodes.OK).json({
             data : result,
             success : true,

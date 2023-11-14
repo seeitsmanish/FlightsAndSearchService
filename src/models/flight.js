@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     airplaneId: {
       type : DataTypes.INTEGER,
-      allowNull : false
+      allowNull: false
     },
     departureAirportId: {
       type : DataTypes.INTEGER,
@@ -48,7 +48,14 @@ module.exports = (sequelize, DataTypes) => {
       type : DataTypes.INTEGER,
       allowNull : false
     },
-    Company: DataTypes.STRING
+    companyName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    companyLogoUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
     sequelize,
     modelName: 'Flight',

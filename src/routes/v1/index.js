@@ -15,6 +15,7 @@ router.delete('/cities/:id', CityController.destroy);
 router.patch('/cities/:id', CityController.update);
 router.get('/cities/:id',CityController.get);
 router.get('/cities', CityController.getAll);
+router.get('/searchCities/', CityController.searchCities);
 
 
 // for airports
@@ -50,6 +51,7 @@ router.delete('/flights/:id', FlightController.destroy);
 router.patch('/flights/:id', FlightController.update);
 router.get('/flights/:id',FlightController.get);
 router.get('/flights', FlightController.getAll);
+router.get('/searchflights', FlightController.searchFlights);
 
 
 module.exports = router;

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Flight', {
+    await queryInterface.createTable('Flights', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,7 +15,7 @@ module.exports = {
       },
       airplaneId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       departureAirportId: {
         type: Sequelize.INTEGER,
@@ -44,8 +44,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      Company: {
-        type: Sequelize.STRING
+      companyName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      companyLogoUrl: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

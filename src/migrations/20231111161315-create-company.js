@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Airports', {
+    await queryInterface.createTable('Companies', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,19 +11,12 @@ module.exports = {
       },
       name: {
         type: Sequelize.STRING,
-        allowNull : false
+        allowNull: false,
+        unique: true
       },
-      address: {
-        type: Sequelize.STRING
-      },
-      cityId: {
-        type: Sequelize.INTEGER,
-        onDelete : 'CASCADE', 
-        references : {
-         model : 'Cities',
-         ley : 'id',
-         as : 'cityId'
-        },
+      logoURL: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +29,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Airports');
+    await queryInterface.dropTable('Companies');
   }
 };

@@ -1,4 +1,4 @@
-const {Flight} = require("../models/index");
+const {Flight, Airport} = require("../models/index");
 const {Op} = require('sequelize');
 const {ValidationError} = require('../utils/errors/index');
 class FlightRepository{
@@ -29,8 +29,9 @@ class FlightRepository{
             const result = await Flight.create(data);
             return result;
         } catch (error) {
-            console.log("Something went wrong in crud repository");
-            throw new ValidationError(error);
+            console.log(error);
+            console.log("Something went wrong in flight repository");
+            // throw new ValidationError(error);
         }
     }
 
@@ -63,6 +64,39 @@ class FlightRepository{
         }
     }
 
+
+    async searchFlights(departureAirportId, arrivalAirportId, departureDate, travellers) {
+
+
+
+        try {
+
+            const flights = await Flight.findAll({
+                where: {
+                    departureAirportId: {
+                        [Op.eq]: departureAirportId
+                    },
+
+                    arrivalAirportId: {
+                        [Op.eq]: arrivalAirportId
+                    },
+                    departureTime: {
+                        [Op.gte]: new Date(departureDate),
+                        [Op.lt]: new Date(new Date(departureDate).setDate(new Date(departureDate).getDate() + 1)),
+                      },
+                    totalSeats: {
+                        [Op.gte]: travellers || 1
+                    }
+                }
+            })
+            return flights;
+
+        } catch (error) {
+            console.log(error);
+            console.log("Something went wrong in repo layer of flights");
+        }
+    }
+
     async get(flightId) {
         try {
             const result = await Flight.findByPk(flightId);
@@ -75,6 +109,11 @@ class FlightRepository{
 
     async getAll(filter) {
         try {
+            // What if there is no filter
+            if(filter == null) {
+                const flights = await Flight.findAll();
+                return flights;
+            }
             const filterObject = this.#createFilter(filter);
             const flight = await Flight.findAll({
                 where : filterObject
