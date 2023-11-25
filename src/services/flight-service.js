@@ -156,6 +156,7 @@ class FlightService {
                 } catch (error) {
                     console.log(error);
                     console.log("Something went wrong during flight creation in flight service!!");
+                    break;
                 }
             }
 
@@ -170,6 +171,9 @@ class FlightService {
         const returnDate = query.returnDate;
         const travellers = query.travellers;
 
+        // console.log( departureCityId,  arrivalCityId,  departureDate,  returnDate,  travellers);
+        // return {};
+
 
         const departureAirportObject = await this.airportRepository.getAirportByCityId(departureCityId);
         const arrivalAirportObject = await this.airportRepository.getAirportByCityId(arrivalCityId);
@@ -181,9 +185,6 @@ class FlightService {
         if(arrivalAirportObject && arrivalAirportObject.dataValues) {
             var arrivalAirportId = arrivalAirportObject.dataValues.id;
         }
-
-
-
 
 
         let departureFlights = null

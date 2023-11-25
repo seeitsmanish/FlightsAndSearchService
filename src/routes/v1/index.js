@@ -51,7 +51,10 @@ router.delete('/flights/:id', FlightController.destroy);
 router.patch('/flights/:id', FlightController.update);
 router.get('/flights/:id',FlightController.get);
 router.get('/flights', FlightController.getAll);
-router.get('/searchflights', FlightController.searchFlights);
+router.get('/searchflights', 
+    FlightandSearchRequestValidator.validSearchForFlights,
+    FlightController.searchFlights
+);
 
 
 module.exports = router;
